@@ -12,12 +12,5 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.6.0"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Ahilan\\LogViewer\\LogViewerServiceProvider"
-            ]
-        }
     }
 }
