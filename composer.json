@@ -1,0 +1,23 @@
+{
+    "name": "ahilan/routeloganalyzer",
+    "description": "This is used for laravel route and log analyzer",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ahilan",
+            "email": "ahilmurugesan@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ahilan\\LogViewer\\LogViewerServiceProvider"
+            ]
+        }
+    }
+}
