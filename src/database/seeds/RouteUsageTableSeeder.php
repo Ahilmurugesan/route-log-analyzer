@@ -13,7 +13,6 @@ class RouteUsageTableSeeder extends Seeder
      */
     public function run()
     {
-        dd('asdasd');
         /*DB::table('route_usages')->insert([
             'name' => 'Admin Admin',
             'email' => 'admin@material.com',
