@@ -11,6 +11,6 @@ class RouteDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([RouteUsageTableSeeder::class]);
+        //$this->call([RouteUsageTableSeeder::class]);
     }
 }
