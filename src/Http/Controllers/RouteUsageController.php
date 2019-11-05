@@ -10,6 +10,7 @@ namespace Ahilan\LogViewer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class RouteUsageController extends Controller
 {
@@ -23,9 +24,12 @@ class RouteUsageController extends Controller
      */
     public function index()
     {
-        $query_route = DB::table('route_usages')
-                            ->get();
+        $query_route = [];
 
+        if(Schema::hasTable('route_usages')) {
+            $query_route = DB::table('route_usages')
+                ->get();
+        }
         return view('logViewer::routeusage', compact('query_route'));
     }
 }
