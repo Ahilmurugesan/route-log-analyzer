@@ -91,7 +91,7 @@
                                                 {{ ucfirst($value['context']) }}
                                             </td>
                                             <td>
-                                                {{ ucfirst($value['level']) }}
+                                                <h4><span class="badge" style="background-color: {{ isset($value['level'][1]) ? $value['level'][1] : '#000000'}};color: white">{{ isset($value['level'][0]) ? ucfirst($value['level'][0]) : ''}}</span></h4>
                                             </td>
                                             <td>
                                                 {{ $value['date']}}

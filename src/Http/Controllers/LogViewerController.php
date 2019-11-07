@@ -50,7 +50,7 @@ class LogViewerController extends Controller
         }
         foreach ($headings as $h) {
             for ($i = 0, $j = count($h); $i < $j; $i++) {
-                foreach ($this->error_level() as $level) {
+                foreach ($this->error_level() as $level => $color) {
                     if (strpos(strtolower($h[$i]), '.' . $level) || strpos(strtolower($h[$i]), $level . ':')) {
                         preg_match($this->pattern_log('log_msg') . $level . $this->pattern_log('log_msg_full'), $h[$i], $current);
                         if (!isset($current[4])) {
@@ -58,7 +58,7 @@ class LogViewerController extends Controller
                         }
                         $log[] = array(
                             'context' => $current[3],
-                            'level' => $level,
+                            'level' => [$level, $color],
                             'folder' =>'',
                             'date' => $current[1],
                             'text' => $current[4],
@@ -113,16 +113,16 @@ class LogViewerController extends Controller
     public function error_level()
     {
         $error_level = [
-                        'debug',
-                        'info',
-                        'notice',
-                        'warning',
-                        'error',
-                        'critical',
-                        'alert',
-                        'emergency',
-                        'processed',
-                        'failed'
+                        'debug' => '#4caf50',
+                        'info' => '#9c27b0',
+                        'notice' => '#607d8b',
+                        'warning' => '#ffc107',
+                        'error' => '#ff5722',
+                        'critical' => '#ed5249',
+                        'alert' => '#ff9800',
+                        'emergency' => '#f44036',
+                        'processed' => '#4cbd4f',
+                        'failed' => '#000000'
                     ];
         return $error_level;
     }
