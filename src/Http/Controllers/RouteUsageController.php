@@ -18,9 +18,7 @@ class RouteUsageController extends Controller
     /**
      * Index function for the package route
      *
-     * @return View
-     *
-     * @author Ahilan
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {

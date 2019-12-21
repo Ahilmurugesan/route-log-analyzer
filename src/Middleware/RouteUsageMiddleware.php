@@ -20,12 +20,17 @@ class RouteUsageMiddleware
     public function handle(Request $request, Closure $next)
     {
         if(Schema::hasTable('route_usages')) {
-            $uri = $request->path();
-            $route_param = $request->route()->getAction();
+            $uri = $request->path(); // Request Path
+
+            $route_param = $request->route()->getAction(); // Route Actions
+
             $name = isset($route_param['as']) ? $route_param['as'] : null;
+
             $action = isset($route_param['controller']) ?
                 $route_param['controller'] : null;
+
             $prefix = isset($route_param['prefix']) ? $route_param['prefix'] : null;
+
             $query_result = DB::table('route_usages')
                 ->where(function ($query) use ($name, $action, $prefix, $uri) {
                     if ($prefix !== null) {
@@ -39,7 +44,8 @@ class RouteUsageMiddleware
             if (!empty($query_result)) {
                 $final_count = $query_result->count + 1;
                 DB::table('route_usages')
-                    ->where(function ($query) use ($name, $action, $prefix, $uri) {
+                    ->where(function ($query) use ($name, $action, $prefix, $uri)
+                    {
                         if ($prefix !== null) {
                             $uri = $prefix . '/' . $uri;
                         }

@@ -25,37 +25,61 @@ class LogViewerController extends Controller
      */
     public function index(Request $request)
     {
-        $request_log = $request->log;
-        $directories = storage_path('logs/');
-        $all_files = File::allFiles($directories);
+        $request_log = $request->log; //Get the log name from the request
+
+        $directories = storage_path('logs/'); //Directory for the log files
+
+        $all_files = File::allFiles($directories); //Getting all files from the log folder
+
+        /**
+         * Getting file name of all the log files present in the log directory
+         */
         $file_name = [];
         foreach($all_files as $key => $value)
         {
             $file_name[] = $value->getFilename();
         }
+
+        /**
+         * Checking if it's a initial request or request from the browser
+         */
         if($request_log == null) {
             $file_to_display = $file_name[0];
         }else{
             $file_to_display = Crypt::decryptString($request_log);
         }
+
+        /**
+         * Getting data from the log files
+         */
         $log = array();
         $file = File::get(storage_path('logs/'.$file_to_display));
+
         preg_match_all($this->pattern_log('dates'), $file, $headings);
+
         if (!is_array($headings)) {
             return $log;
         }
+
         $log_data = preg_split($this->pattern_log('dates'), $file);
         if ($log_data[0] < 1) {
             array_shift($log_data);
         }
-        foreach ($headings as $h) {
-            for ($i = 0, $j = count($h); $i < $j; $i++) {
-                foreach ($this->error_level() as $level => $color) {
-                    if (strpos(strtolower($h[$i]), '.' . $level) || strpos(strtolower($h[$i]), $level . ':')) {
+
+        foreach ($headings as $h)
+        {
+            for ($i = 0, $j = count($h); $i < $j; $i++)
+            {
+                foreach ($this->error_level() as $level => $color)
+                {
+                    if (strpos(strtolower($h[$i]), '.' . $level) || strpos(strtolower($h[$i]), $level . ':'))
+                    {
                         preg_match($this->pattern_log('log_msg') . $level . $this->pattern_log('log_msg_full'), $h[$i], $current);
+
                         if (!isset($current[4])) {
                             continue;
                         }
+
                         $log[] = array(
                             'context' => $current[3],
                             'level' => [$level, $color],
@@ -68,7 +92,10 @@ class LogViewerController extends Controller
                 }
             }
         }
-        if (empty($log)) {
+
+        if (empty($log))
+        {
+
             $lines = explode(PHP_EOL, $file);
             $log = [];
             foreach ($lines as $key => $line) {
@@ -80,6 +107,7 @@ class LogViewerController extends Controller
                     'desc' => '',
                 ];
             }
+
         }
         $final_log = array_reverse($log);
 
@@ -105,7 +133,7 @@ class LogViewerController extends Controller
     }
 
     /**
-     * To get the errror level for the package
+     * To get the error level for the package
      *
      * @return array
      * @author Ahilan
